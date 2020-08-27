@@ -13,4 +13,11 @@ struct Profile: Codable, Hashable, Equatable {
     let firstName: String
     let userName: String
     let lastName: String
+    
+    init() {
+        self.firstName = .empty
+        self.userName = .empty
+        self.lastName = .empty
+    }
+
 }

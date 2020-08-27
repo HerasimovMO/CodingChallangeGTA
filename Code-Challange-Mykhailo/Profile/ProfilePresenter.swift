@@ -10,11 +10,41 @@ import Foundation
 
 class ProfilePresenter: ProfileViewPresenter {
     
+    private var loadState: LoadingState = .didLoad {
+        didSet {
+            view.loadingProfile(with: loadState)
+        }
+    }
+    
+    var profile: Profile
+    
     unowned let view: ProfileView
     
     required init(view: ProfileView) {
         
         self.view = view
+        self.profile = Profile()
     }
     
+    // API requests
+    
+    func loadProfile() {
+        
+        loadState = .willLoad
+        loadState = .isLoading
+        
+        APIClient().getProfile { [weak self] response in
+            
+            guard let self = self else { return }
+            
+            guard let profile = response.value?.data else {
+                
+                self.loadState = .failLoading
+                return
+            }
+            
+            self.profile = profile
+            self.loadState = .didLoad
+        }
+    }
 }

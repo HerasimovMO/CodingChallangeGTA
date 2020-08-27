@@ -9,7 +9,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
+    
     var presenter: ProfileViewPresenter!
     
     override func viewDidLoad() {
@@ -18,8 +18,33 @@ class ProfileViewController: UIViewController {
         
         view.backgroundColor = .blue
     }
-
-
+    
+    
 }
 
-extension ProfileViewController: ProfileView {}
+extension ProfileViewController: ProfileView {
+    
+    func loadingProfile(with state: LoadingState) {
+        
+        switch state {
+        case .willLoad:
+//            guard info.type == .loadNew else { break }
+            break
+            //                  LoaderView.shared.start(in: view) { [weak self] in
+            //                      guard let self = self else { return }
+            //                      view.insertSubview($0, aboveSubview: self.collectionView)
+        //                  }
+        case .failLoading:
+            //                  LoaderView.shared.stop()
+            //                  refreshControl.endRefreshing()
+            //                  configureBackgroundView(for: .error)
+            break
+        case .didLoad:
+            //                  LoaderView.shared.stop()
+            //                  refreshControl.endRefreshing()
+            //                  refreshDisposableItems(animatingDifferences: true)
+            print(presenter.profile)
+        case .isLoading: break
+        }
+    }
+}
