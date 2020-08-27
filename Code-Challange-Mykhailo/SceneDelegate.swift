@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         profile.presenter = ProfilePresenter(view: profile)
         
         let navigation = UINavigationController(rootViewController: profile)
+        navigation.navigationBar.tintColor = UIColor.mainTint
         window.rootViewController = navigation
         
         self.window = window
