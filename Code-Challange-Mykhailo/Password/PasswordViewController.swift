@@ -10,11 +10,11 @@ import UIKit
 
 class PasswordViewController: UIViewController {
     
-    let containerStackView = UIStackView.create(axis: .vertical, spacing: 16)
+    private let containerStackView = UIStackView.create(axis: .vertical, spacing: 16)
     
-    let currentPassTextField = UITextField.create(placeholder: NSLocalizedString("Current password", comment: "Text field placeholder"))
-    let newPassTextField = UITextField.create(placeholder: NSLocalizedString("New password", comment: "Text field placeholder"))
-    let confirmPassTextField = UITextField.create(placeholder: NSLocalizedString("Confirm password", comment: "Text field placeholder"))
+    private let currentPassTextField = UITextField.create(placeholder: NSLocalizedString("Current password", comment: "Text field placeholder"))
+    private let newPassTextField = UITextField.create(placeholder: NSLocalizedString("New password", comment: "Text field placeholder"))
+    private let confirmPassTextField = UITextField.create(placeholder: NSLocalizedString("Confirm password", comment: "Text field placeholder"))
     
     var presenter: PasswordViewPresenter!
     
@@ -27,12 +27,15 @@ class PasswordViewController: UIViewController {
         configureUI()
     }
     
-    func configureUI() {
+    // MARK: UI configuration
+    
+    private func configureUI() {
         
         configureTextFields()
+        configureButton()
     }
     
-    func configureTextFields() {
+    private func configureTextFields() {
         
         let labelNames = [NSLocalizedString("Enter current password", comment: "Label for the text field"),
                           NSLocalizedString("Enter new password", comment: "Label for the text field"),
@@ -53,7 +56,25 @@ class PasswordViewController: UIViewController {
         NSLayoutConstraint.snap(containerStackView, to: view, for: [.topSafe, .left, .right], with: .create(vertical: 45, horizontal: 45))
     }
     
+    private func configureButton() {
+        
+        let resetPassButtonText = NSLocalizedString("Reset Password", comment: "Button title")
+        let resetPassButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .body), text: resetPassButtonText, textColor: .white, textAlignment: .center, backgroundColor: UIColor.mainTint, cornerRadius: 10)
+        resetPassButton.addTarget(self, action: #selector(handleResetPassword(button:)), for: .touchUpInside)
+        
+        NSLayoutConstraint.size(view: resetPassButton, attributes: [.height(value: 50)])
+        
+        view.addSubview(resetPassButton)
+        resetPassButton.topAnchor.constraint(equalTo: containerStackView.bottomAnchor, constant: 34).isActive = true
+        NSLayoutConstraint.snap(resetPassButton, to: containerStackView, for: [.left, .right])
+    }
     
+    // MARK: Actions
+    
+    @objc private func handleResetPassword(button: UIButton) {
+        
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 extension PasswordViewController: PasswordView {}

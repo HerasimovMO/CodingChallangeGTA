@@ -10,11 +10,11 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    let containerStackView = UIStackView.create(axis: .vertical, spacing: 16)
+    private let containerStackView = UIStackView.create(axis: .vertical, spacing: 16)
     
-    let usernameTextField = UITextField.create(placeholder: NSLocalizedString("Enter username", comment: "Text field placeholder"))
-    let firstNameTextField = UITextField.create(placeholder: NSLocalizedString("Enter first name", comment: "Text field placeholder"))
-    let lastNameTextField = UITextField.create(placeholder: NSLocalizedString("Enter last name", comment: "Text field placeholder"))
+    private let usernameTextField = UITextField.create(placeholder: NSLocalizedString("Enter username", comment: "Text field placeholder"))
+    private let firstNameTextField = UITextField.create(placeholder: NSLocalizedString("Enter first name", comment: "Text field placeholder"))
+    private let lastNameTextField = UITextField.create(placeholder: NSLocalizedString("Enter last name", comment: "Text field placeholder"))
     
     var presenter: ProfileViewPresenter!
     
@@ -29,13 +29,13 @@ class ProfileViewController: UIViewController {
     
     // MARK: UI configuration
     
-    func configureUI() {
+    private func configureUI() {
         
         configureTextFields()
         configureButtons()
     }
     
-    func configureTextFields() {
+    private func configureTextFields() {
         
         let labelNames = [NSLocalizedString("Username", comment: "Label for the text field"),
                           NSLocalizedString("First name", comment: "Label for the text field"),
@@ -56,7 +56,7 @@ class ProfileViewController: UIViewController {
         NSLayoutConstraint.snap(containerStackView, to: view, for: [.topSafe, .left, .right], with: .create(vertical: 45, horizontal: 45))
     }
     
-    func configureButtons() {
+    private func configureButtons() {
         
         let stackView = UIStackView.create(axis: .vertical, spacing: 0)
         
@@ -64,14 +64,14 @@ class ProfileViewController: UIViewController {
         let saveButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .body), text: saveButtonText, textColor: .white, textAlignment: .center, backgroundColor: UIColor.mainTint, cornerRadius: 10)
         saveButton.addTarget(self, action: #selector(handleProfileUpdate(button:)), for: .touchUpInside)
         
-        let forgotPasswordButtonText = NSLocalizedString("Reset Password", comment: "Button title")
-        let forgotPasswordButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .caption1), text: forgotPasswordButtonText, textColor: UIColor.mainTint, textAlignment: .center)
-        forgotPasswordButton.addTarget(self, action: #selector(handleResetPassword(button:)), for: .touchUpInside)
+        let resetPassButtonText = NSLocalizedString("Reset Password", comment: "Button title")
+        let resetPassButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .caption1), text: resetPassButtonText, textColor: UIColor.mainTint, textAlignment: .center)
+        resetPassButton.addTarget(self, action: #selector(handleResetPassword(button:)), for: .touchUpInside)
         
-        NSLayoutConstraint.size(view: forgotPasswordButton, attributes: [.height(value: 44)])
+        NSLayoutConstraint.size(view: resetPassButton, attributes: [.height(value: 44)])
         NSLayoutConstraint.size(view: saveButton, attributes: [.height(value: 50)])
         
-        stackView.items = [saveButton, forgotPasswordButton]
+        stackView.items = [saveButton, resetPassButton]
         view.addSubview(stackView)
         
         stackView.topAnchor.constraint(equalTo: containerStackView.bottomAnchor, constant: 34).isActive = true
@@ -80,12 +80,12 @@ class ProfileViewController: UIViewController {
     
     // MARK: Actions
     
-    @objc func handleProfileUpdate(button: UIButton) {
+    @objc private func handleProfileUpdate(button: UIButton) {
         
         print("handle profile update")
     }
     
-    @objc func handleResetPassword(button: UIButton) {
+    @objc private func handleResetPassword(button: UIButton) {
         
         let passwordResetViewController = PasswordViewController()
         passwordResetViewController.presenter = PasswordPresenter(view: passwordResetViewController)
