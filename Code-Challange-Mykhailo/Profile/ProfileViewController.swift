@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ProfileViewController.swift
 //  Code-Challange-Mykhailo
 //
 //  Created by Mykhailo Herasimov on 2020-08-26.
@@ -8,13 +8,18 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ProfileViewController: UIViewController {
 
+    var presenter: ProfileViewPresenter!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        view.backgroundColor = .blue
     }
 
 
 }
 
+extension ProfileViewController: ProfileView {}
