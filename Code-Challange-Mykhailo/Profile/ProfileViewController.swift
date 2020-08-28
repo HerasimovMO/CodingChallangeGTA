@@ -16,6 +16,10 @@ class ProfileViewController: UIViewController {
     private let firstNameTextField = UITextField.create(placeholder: NSLocalizedString("Enter first name", comment: "Text field placeholder"))
     private let lastNameTextField = UITextField.create(placeholder: NSLocalizedString("Enter last name", comment: "Text field placeholder"))
     
+    private var allTextFields: [UITextField] {
+        return [usernameTextField, firstNameTextField, lastNameTextField]
+    }
+    
     var presenter: ProfileViewPresenter!
     
     override func viewDidLoad() {
@@ -25,6 +29,12 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .white
         
         configureUI()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        guard allTextFields.contains(where: { $0.isFirstResponder }) else { return }
+        self.view.endEditing(true)
     }
     
     // MARK: UI configuration
@@ -41,7 +51,7 @@ class ProfileViewController: UIViewController {
                           NSLocalizedString("First name", comment: "Label for the text field"),
                           NSLocalizedString("Last name", comment: "Label for the text field")]
         
-        for (index, textField) in [usernameTextField, firstNameTextField, lastNameTextField].enumerated() {
+        for (index, textField) in allTextFields.enumerated() {
             
             let label = UILabel.create(font: UIFont.preferredFont(forTextStyle: .caption1), text: labelNames[index])
             let separator = UIView.createSeparator()

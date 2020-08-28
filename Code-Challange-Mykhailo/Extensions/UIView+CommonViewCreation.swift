@@ -45,9 +45,10 @@ extension UIView {
 
 extension UITextField {
 
-    class func create(placeholder: String, contentPriority axies: [NSLayoutConstraint.PriorityAxis] = [.vertical]) -> UITextField {
+    class func create(placeholder: String, isSecureEntry: Bool = false, contentPriority axies: [NSLayoutConstraint.PriorityAxis] = [.vertical]) -> UITextField {
 
         let textField = UITextField()
+        textField.isSecureTextEntry = isSecureEntry
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = placeholder
         textField.configureRequiredPriorities(for: axies)
@@ -118,6 +119,15 @@ extension UIButton {
                 let colorImage = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 button.setBackgroundImage(colorImage, for: .normal)
+            }
+            
+            UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))
+            if let context = UIGraphicsGetCurrentContext() {
+                context.setFillColor(UIColor.lightGray.cgColor)
+                context.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+                let colorImage = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                button.setBackgroundImage(colorImage, for: .disabled)
             }
         }
         

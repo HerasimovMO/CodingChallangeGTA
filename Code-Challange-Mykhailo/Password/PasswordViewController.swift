@@ -8,13 +8,23 @@
 
 import UIKit
 
-class PasswordViewController: UIViewController {
+class PasswordViewController: UIViewController, AlertPresentable {
+    
+    private enum Fields: Int {
+        case current = 1, new, confirm
+    }
     
     private let containerStackView = UIStackView.create(axis: .vertical, spacing: 16)
     
-    private let currentPassTextField = UITextField.create(placeholder: NSLocalizedString("Current password", comment: "Text field placeholder"))
-    private let newPassTextField = UITextField.create(placeholder: NSLocalizedString("New password", comment: "Text field placeholder"))
-    private let confirmPassTextField = UITextField.create(placeholder: NSLocalizedString("Confirm password", comment: "Text field placeholder"))
+    private let currentPassTextField = UITextField.create(placeholder: NSLocalizedString("Current password", comment: "Text field placeholder"), isSecureEntry: true)
+    private let newPassTextField = UITextField.create(placeholder: NSLocalizedString("New password", comment: "Text field placeholder"), isSecureEntry: true)
+    private let confirmPassTextField = UITextField.create(placeholder: NSLocalizedString("Confirm password", comment: "Text field placeholder"), isSecureEntry: true)
+    
+    private var allTextFields: [UITextField] {
+        return [currentPassTextField, newPassTextField, confirmPassTextField]
+    }
+    
+    private let resetPassButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .body), text: NSLocalizedString("Reset Password", comment: "Button title"), textColor: .white, textAlignment: .center, backgroundColor: UIColor.mainTint, cornerRadius: 10)
     
     var presenter: PasswordViewPresenter!
     
@@ -25,6 +35,12 @@ class PasswordViewController: UIViewController {
         view.backgroundColor = .white
         
         configureUI()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        guard allTextFields.contains(where: { $0.isFirstResponder }) else { return }
+        self.view.endEditing(true)
     }
     
     // MARK: UI configuration
@@ -41,7 +57,7 @@ class PasswordViewController: UIViewController {
                           NSLocalizedString("Enter new password", comment: "Label for the text field"),
                           NSLocalizedString("Confirm entered password", comment: "Label for the text field")]
         
-        for (index, textField) in [currentPassTextField, newPassTextField, confirmPassTextField].enumerated() {
+        for (index, textField) in allTextFields.enumerated() {
             
             let label = UILabel.create(font: UIFont.preferredFont(forTextStyle: .caption1), text: labelNames[index])
             let separator = UIView.createSeparator()
@@ -50,6 +66,9 @@ class PasswordViewController: UIViewController {
             let stackView = UIStackView.create(axis: .vertical)
             stackView.items = [label, textField, separator]
             containerStackView.addArrangedSubview(stackView)
+            
+            textField.tag = index + 1
+            textField.delegate = self
         }
         
         view.addSubview(containerStackView)
@@ -58,9 +77,8 @@ class PasswordViewController: UIViewController {
     
     private func configureButton() {
         
-        let resetPassButtonText = NSLocalizedString("Reset Password", comment: "Button title")
-        let resetPassButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .body), text: resetPassButtonText, textColor: .white, textAlignment: .center, backgroundColor: UIColor.mainTint, cornerRadius: 10)
         resetPassButton.addTarget(self, action: #selector(handleResetPassword(button:)), for: .touchUpInside)
+        resetPassButton.isEnabled = presenter.passwordInfo.isValid
         
         NSLayoutConstraint.size(view: resetPassButton, attributes: [.height(value: 50)])
         
@@ -73,8 +91,68 @@ class PasswordViewController: UIViewController {
     
     @objc private func handleResetPassword(button: UIButton) {
         
-        navigationController?.popViewController(animated: true)
+        self.view.endEditing(true)
+        presenter.updatePassword()
+    }
+    
+    // MARK: Login handling
+    
+    private func updateValue(with text: String, in textField: UITextField) {
+        
+        guard let field = Fields(rawValue: textField.tag) else { return }
+        
+        switch field {
+        case .confirm:
+            presenter.passwordInfo.passwordConfirmation = text
+        case .new:
+            presenter.passwordInfo.newPassword = text
+        case .current:
+            presenter.passwordInfo.currentPassword = text
+        }
+        
+        resetPassButton.isEnabled = presenter.passwordInfo.isValid
     }
 }
 
-extension PasswordViewController: PasswordView {}
+extension PasswordViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        guard let text = textField.text else { return }
+        updateValue(with: text, in: textField)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        guard let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return true }
+        updateValue(with: text, in: textField)
+        return true
+    }
+}
+
+extension PasswordViewController: PasswordView {
+    
+    func updatePassword(with state: LoadingState) {
+        
+        switch state {
+        case .willLoad:
+
+            LoaderView.shared.start(in: view)
+        case .failLoading:
+            
+            LoaderView.shared.stop()
+            presentAlert(title: NSLocalizedString("Failure", comment: "Alert title"), message: NSLocalizedString("Failed to updated password, try again.", comment: "Alert message"))
+        case .didLoad:
+            
+            LoaderView.shared.stop()
+            navigationController?.popViewController(animated: true)
+        case .isLoading: break
+        }
+    }
+}

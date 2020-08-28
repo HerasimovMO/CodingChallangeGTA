@@ -12,37 +12,38 @@ class PasswordPresenter: PasswordViewPresenter {
     
     private var loadState: LoadingState = .didLoad {
         didSet {
-//            view.loadingProfile(with: loadState)
+            view.updatePassword(with: loadState)
         }
     }
+    
+    var passwordInfo: UpdatePasswordCall
     
     unowned let view: PasswordView
     
     required init(view: PasswordView) {
         
         self.view = view
-//        self.profile = Profile()
+        self.passwordInfo = UpdatePasswordCall()
     }
     
     // API requests
     
-//    func loadProfile() {
-//
-//        loadState = .willLoad
-//        loadState = .isLoading
-//
-//        APIClient().getProfile { [weak self] response in
-//
-//            guard let self = self else { return }
-//
-//            guard let profile = response.value?.data else {
-//
-//                self.loadState = .failLoading
-//                return
-//            }
-//
-//            self.profile = profile
-//            self.loadState = .didLoad
-//        }
-//    }
+    func updatePassword() {
+        
+        loadState = .willLoad
+        loadState = .isLoading
+        
+        APIClient().updatePassword(call: passwordInfo) { [weak self] response in
+            
+            guard let self = self else { return }
+            
+            guard let profile = response.value?.data else {
+                
+                self.loadState = .failLoading
+                return
+            }
+            
+            self.loadState = .didLoad
+        }
+    }
 }

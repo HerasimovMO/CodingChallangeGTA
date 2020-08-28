@@ -13,6 +13,9 @@
 		848E35B424F86D5000885F09 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35B324F86D5000885F09 /* PasswordViewController.swift */; };
 		848E35B624F86D6D00885F09 /* PasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35B524F86D6D00885F09 /* PasswordPresenter.swift */; };
 		848E35B824F86D7C00885F09 /* PasswordMVPTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35B724F86D7C00885F09 /* PasswordMVPTemplate.swift */; };
+		848E35BB24F8845E00885F09 /* UIAlertAction+DefaultActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35BA24F8845D00885F09 /* UIAlertAction+DefaultActions.swift */; };
+		848E35BE24F8848F00885F09 /* AlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35BD24F8848F00885F09 /* AlertPresentable.swift */; };
+		848E35C124F8860A00885F09 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35C024F8860A00885F09 /* LoaderView.swift */; };
 		84E1227E24F7289200C37C57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1227D24F7289200C37C57 /* AppDelegate.swift */; };
 		84E1228024F7289200C37C57 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1227F24F7289200C37C57 /* SceneDelegate.swift */; };
 		84E1228224F7289200C37C57 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1228124F7289200C37C57 /* ProfileViewController.swift */; };
@@ -61,6 +64,9 @@
 		848E35B324F86D5000885F09 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
 		848E35B524F86D6D00885F09 /* PasswordPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordPresenter.swift; sourceTree = "<group>"; };
 		848E35B724F86D7C00885F09 /* PasswordMVPTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordMVPTemplate.swift; sourceTree = "<group>"; };
+		848E35BA24F8845D00885F09 /* UIAlertAction+DefaultActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+DefaultActions.swift"; sourceTree = "<group>"; };
+		848E35BD24F8848F00885F09 /* AlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresentable.swift; sourceTree = "<group>"; };
+		848E35C024F8860A00885F09 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		84E1227A24F7289200C37C57 /* Code-Challange-Mykhailo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Code-Challange-Mykhailo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E1227D24F7289200C37C57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84E1227F24F7289200C37C57 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -133,6 +139,22 @@
 				84E122D224F73D6100C37C57 /* UpdatePasswordCall.swift */,
 			);
 			path = Calls;
+			sourceTree = "<group>";
+		};
+		848E35BC24F8848800885F09 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				848E35BD24F8848F00885F09 /* AlertPresentable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		848E35BF24F885EB00885F09 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				848E35C024F8860A00885F09 /* LoaderView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		84E1227124F7289200C37C57 = {
@@ -214,7 +236,9 @@
 			children = (
 				84E122CE24F73B3C00C37C57 /* LoadingInfo.swift */,
 				84E122BC24F7324800C37C57 /* Network */,
+				848E35BF24F885EB00885F09 /* Views */,
 				84E122BB24F72F7B00C37C57 /* Models */,
+				848E35BC24F8848800885F09 /* Protocols */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -226,6 +250,7 @@
 				848E35AB24F855CE00885F09 /* UIView+CommonViewCreation.swift */,
 				848E35AD24F855FB00885F09 /* AutoLayout+ConvenientHelpers.swift */,
 				848E35AF24F86A7100885F09 /* UIColor+Theme.swift */,
+				848E35BA24F8845D00885F09 /* UIAlertAction+DefaultActions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -394,6 +419,7 @@
 				84E122C624F7328D00C37C57 /* APIParser.swift in Sources */,
 				84E122B624F72EA500C37C57 /* Profile.swift in Sources */,
 				848E35B424F86D5000885F09 /* PasswordViewController.swift in Sources */,
+				848E35BE24F8848F00885F09 /* AlertPresentable.swift in Sources */,
 				84E1227E24F7289200C37C57 /* AppDelegate.swift in Sources */,
 				848E35AC24F855CE00885F09 /* UIView+CommonViewCreation.swift in Sources */,
 				84E122C224F7327B00C37C57 /* APIClient.swift in Sources */,
@@ -406,8 +432,10 @@
 				848E35B024F86A7100885F09 /* UIColor+Theme.swift in Sources */,
 				84E122B124F72A9800C37C57 /* ProfileMVPTemplate.swift in Sources */,
 				848E35B624F86D6D00885F09 /* PasswordPresenter.swift in Sources */,
+				848E35C124F8860A00885F09 /* LoaderView.swift in Sources */,
 				84E122C024F7327200C37C57 /* APIRequest.swift in Sources */,
 				84E122CF24F73B3C00C37C57 /* LoadingInfo.swift in Sources */,
+				848E35BB24F8845E00885F09 /* UIAlertAction+DefaultActions.swift in Sources */,
 				84E122BE24F7326500C37C57 /* NetworkSessionManager.swift in Sources */,
 				84E122C424F7328500C37C57 /* APIError.swift in Sources */,
 				84E122CD24F73A3C00C37C57 /* GetProfileCall.swift in Sources */,

@@ -10,9 +10,19 @@ import Foundation
 
 struct UpdatePasswordCall {
     
-    let currentPassword: String
-    let newPassword: String
-    let passwordConfirmation: String
+    var currentPassword: String
+    var newPassword: String
+    var passwordConfirmation: String
+    
+    init(currentPassword: String = .empty, newPassword: String = .empty, passwordConfirmation: String = .empty) {
+        self.currentPassword = currentPassword
+        self.newPassword = newPassword
+        self.passwordConfirmation = passwordConfirmation
+    }
+    
+    var isValid: Bool {
+        return !([currentPassword, newPassword, passwordConfirmation].contains(where: { $0 == .empty }))
+    }
 }
 
 extension UpdatePasswordCall: APIParser {
@@ -36,9 +46,8 @@ extension UpdatePasswordCall: APIRequest {
 
 extension APIClient {
 
-    func updatePassword(currentPass: String, newPass: String, confirmPass: String, _ completion: @escaping (APIResponse<APIResult<String>>) -> Void) {
-        let call = UpdatePasswordCall(currentPassword: currentPass, newPassword: newPass, passwordConfirmation: currentPass)
-
+    func updatePassword(call: UpdatePasswordCall, _ completion: @escaping (APIResponse<APIResult<String>>) -> Void) {
+        
         sessionManager.data(call) { response in
             self.handleResponse(call, response: response, completionHandler: completion)
         }

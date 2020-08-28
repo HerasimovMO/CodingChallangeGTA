@@ -10,18 +10,14 @@ import Foundation
 
 protocol PasswordViewPresenter {
     
-//    var profile: Profile { get }
+    var passwordInfo: UpdatePasswordCall { get set }
     
     init(view: PasswordView)
     
-//    func header(for section: LifeStyleSection) -> (title: String, annotation: String)
-    
-//    func loadProfile()
-//    func filterDisposableItems(query: String?)
+    func updatePassword()
 }
 
 protocol PasswordView: class {
     
-//    func loadingProfile(with state: LoadingState)
-//    func refreshDisposableItems(animatingDifferences: Bool)
+    func updatePassword(with state: LoadingState)
 }
