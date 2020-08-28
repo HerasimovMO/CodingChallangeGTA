@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, AlertPresentable {
     
     private let containerStackView = UIStackView.create(axis: .vertical, spacing: 16)
     
@@ -24,11 +24,12 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         navigationItem.title = NSLocalizedString("Profile", comment: "Title of the view")
         view.backgroundColor = .white
         
         configureUI()
+        presenter.loadProfile()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -75,7 +76,7 @@ class ProfileViewController: UIViewController {
         saveButton.addTarget(self, action: #selector(handleProfileUpdate(button:)), for: .touchUpInside)
         
         let resetPassButtonText = NSLocalizedString("Reset Password", comment: "Button title")
-        let resetPassButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .caption1), text: resetPassButtonText, textColor: UIColor.mainTint, textAlignment: .center)
+        let resetPassButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .footnote), text: resetPassButtonText, textColor: UIColor.mainTint, textAlignment: .center)
         resetPassButton.addTarget(self, action: #selector(handleResetPassword(button:)), for: .touchUpInside)
         
         NSLayoutConstraint.size(view: resetPassButton, attributes: [.height(value: 44)])
@@ -110,22 +111,19 @@ extension ProfileViewController: ProfileView {
         
         switch state {
         case .willLoad:
-            //            guard info.type == .loadNew else { break }
-            break
-            //                  LoaderView.shared.start(in: view) { [weak self] in
-            //                      guard let self = self else { return }
-            //                      view.insertSubview($0, aboveSubview: self.collectionView)
-        //                  }
+
+            LoaderView.shared.start(in: view)
         case .failLoading:
-            //                  LoaderView.shared.stop()
-            //                  refreshControl.endRefreshing()
-            //                  configureBackgroundView(for: .error)
-            break
+            
+            LoaderView.shared.stop()
+            presentAlert(title: NSLocalizedString("Failure", comment: "Alert title"), message: NSLocalizedString("Failed to load profile", comment: "Alert message"))
         case .didLoad:
-            //                  LoaderView.shared.stop()
-            //                  refreshControl.endRefreshing()
-            //                  refreshDisposableItems(animatingDifferences: true)
-            print(presenter.profile)
+            
+            LoaderView.shared.stop()
+            
+            usernameTextField.text = presenter.profile.userName
+            firstNameTextField.text = presenter.profile.firstName
+            lastNameTextField.text = presenter.profile.lastName
         case .isLoading: break
         }
     }

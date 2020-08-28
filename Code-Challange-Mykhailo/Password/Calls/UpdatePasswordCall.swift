@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UpdatePasswordCall {
+struct UpdatePasswordCall: Encodable {
     
     var currentPassword: String
     var newPassword: String

@@ -8,9 +8,10 @@
 
 import Foundation
 
-struct UpdateProfileCall {
+struct UpdateProfileCall: Encodable {
     let firstName: String
     let lastName: String
+    let userName: String
 }
 
 extension UpdateProfileCall: APIParser {
@@ -34,8 +35,7 @@ extension UpdateProfileCall: APIRequest {
 
 extension APIClient {
 
-    func updateProfile(firstName: String, lastName: String, _ completion: @escaping (APIResponse<APIResult<Profile>>) -> Void) {
-        let call = UpdateProfileCall(firstName: firstName, lastName: lastName)
+    func updateProfile(call: UpdateProfileCall, _ completion: @escaping (APIResponse<APIResult<Profile>>) -> Void) {
 
         sessionManager.data(call) { response in
             self.handleResponse(call, response: response, completionHandler: completion)

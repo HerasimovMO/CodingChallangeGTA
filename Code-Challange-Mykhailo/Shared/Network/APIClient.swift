@@ -15,7 +15,7 @@ final class APIClient {
     static var baseUrl: URL = {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "api.foo.com"
+        components.host = "murmuring-scrubland-14448.herokuapp.com" // api.foo.com
 
         guard let url = components.url else {
             fatalError("invalid API configuration")

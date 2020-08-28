@@ -23,7 +23,7 @@ class APIResult<T: Decodable>: Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
         message = try values.decode(String.self, forKey: .message)
-        code = try values.decode(String.self, forKey: .code)
+        code = try values.decodeIfPresent(String.self, forKey: .code)
         exceptionName = try values.decodeIfPresent(String.self, forKey: .exceptionName)
         data = try values.decodeIfPresent(T.self, forKey: .data)
     }

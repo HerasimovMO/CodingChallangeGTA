@@ -37,13 +37,12 @@ class PasswordPresenter: PasswordViewPresenter {
             
             guard let self = self else { return }
             
-            guard let profile = response.value?.data else {
-                
+            switch response {
+            case .failure:
                 self.loadState = .failLoading
-                return
+            case .success:
+                self.loadState = .didLoad
             }
-            
-            self.loadState = .didLoad
         }
     }
 }
