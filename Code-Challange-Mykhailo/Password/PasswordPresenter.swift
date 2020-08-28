@@ -39,7 +39,7 @@ class PasswordPresenter: PasswordViewPresenter {
             
             switch response {
             case .failure:
-                self.loadState = .failLoading
+                self.loadState = .failLoading(message: NSLocalizedString("Failed to updated password, try again.", comment: "Alert message"))
             case .success:
                 self.loadState = .didLoad
             }

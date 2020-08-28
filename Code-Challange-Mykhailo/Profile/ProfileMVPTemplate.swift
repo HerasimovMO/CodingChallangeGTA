@@ -10,18 +10,15 @@ import Foundation
 
 protocol ProfileViewPresenter {
     
-    var profile: Profile { get }
+    var profile: Profile { get set }
     
     init(view: ProfileView)
     
-//    func header(for section: LifeStyleSection) -> (title: String, annotation: String)
-    
     func loadProfile()
-//    func filterDisposableItems(query: String?)
+    func updateProfile()
 }
 
 protocol ProfileView: class {
     
     func loadingProfile(with state: LoadingState)
-//    func refreshDisposableItems(animatingDifferences: Bool)
 }

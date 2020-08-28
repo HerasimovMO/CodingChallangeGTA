@@ -39,7 +39,27 @@ class ProfilePresenter: ProfileViewPresenter {
             
             guard let profile = response.value?.data else {
                 
-                self.loadState = .failLoading
+                self.loadState = .failLoading(message: NSLocalizedString("Failed to load profile", comment: "Alert message"))
+                return
+            }
+            
+            self.profile = profile
+            self.loadState = .didLoad
+        }
+    }
+    
+    func updateProfile() {
+        
+        loadState = .willLoad
+        loadState = .isLoading
+        
+        APIClient().updateProfile(profile: profile) { [weak self] response in
+            
+            guard let self = self else { return }
+            
+            guard let profile = response.value?.data else {
+                
+                self.loadState = .failLoading(message: NSLocalizedString("Failed to update profile, try again", comment: "Alert message"))
                 return
             }
             

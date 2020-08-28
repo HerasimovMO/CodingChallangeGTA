@@ -10,6 +10,12 @@ import UIKit
 
 class ProfileViewController: UIViewController, AlertPresentable {
     
+    private enum Fields: Int {
+        case username = 1, firstname, lastname
+    }
+    
+    // MARK: UI items
+    
     private let containerStackView = UIStackView.create(axis: .vertical, spacing: 16)
     
     private let usernameTextField = UITextField.create(placeholder: NSLocalizedString("Enter username", comment: "Text field placeholder"))
@@ -20,7 +26,11 @@ class ProfileViewController: UIViewController, AlertPresentable {
         return [usernameTextField, firstNameTextField, lastNameTextField]
     }
     
+    private let saveButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .body), text: NSLocalizedString("Save Changes", comment: "Button title"), textColor: .white, textAlignment: .center, backgroundColor: UIColor.mainTint, cornerRadius: 10)
+    
     var presenter: ProfileViewPresenter!
+    
+    // MARK: Overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +71,9 @@ class ProfileViewController: UIViewController, AlertPresentable {
             let stackView = UIStackView.create(axis: .vertical)
             stackView.items = [label, textField, separator]
             containerStackView.addArrangedSubview(stackView)
+            
+            textField.tag = index + 1
+            textField.delegate = self
         }
         
         view.addSubview(containerStackView)
@@ -71,12 +84,10 @@ class ProfileViewController: UIViewController, AlertPresentable {
         
         let stackView = UIStackView.create(axis: .vertical, spacing: 0)
         
-        let saveButtonText = NSLocalizedString("Save Changes", comment: "Button title")
-        let saveButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .body), text: saveButtonText, textColor: .white, textAlignment: .center, backgroundColor: UIColor.mainTint, cornerRadius: 10)
         saveButton.addTarget(self, action: #selector(handleProfileUpdate(button:)), for: .touchUpInside)
         
-        let resetPassButtonText = NSLocalizedString("Reset Password", comment: "Button title")
-        let resetPassButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .footnote), text: resetPassButtonText, textColor: UIColor.mainTint, textAlignment: .center)
+        let resetPassText = NSLocalizedString("Reset Password", comment: "Button title")
+        let resetPassButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .footnote), text: resetPassText, textColor: UIColor.mainTint, textAlignment: .center)
         resetPassButton.addTarget(self, action: #selector(handleResetPassword(button:)), for: .touchUpInside)
         
         NSLayoutConstraint.size(view: resetPassButton, attributes: [.height(value: 44)])
@@ -92,8 +103,9 @@ class ProfileViewController: UIViewController, AlertPresentable {
     // MARK: Actions
     
     @objc private func handleProfileUpdate(button: UIButton) {
-        
-        print("handle profile update")
+    
+        self.view.endEditing(true)
+        presenter.updateProfile()
     }
     
     @objc private func handleResetPassword(button: UIButton) {
@@ -103,6 +115,46 @@ class ProfileViewController: UIViewController, AlertPresentable {
         
         navigationController?.pushViewController(passwordResetViewController, animated: true)
     }
+    
+    // MARK: Logic handling
+    
+    private func updateValue(with text: String, in textField: UITextField) {
+        
+        guard let field = Fields(rawValue: textField.tag) else { return }
+        
+        switch field {
+        case .username:
+            presenter.profile.userName = text
+        case .lastname:
+            presenter.profile.lastName = text
+        case .firstname:
+            presenter.profile.firstName = text
+        }
+        
+        saveButton.isEnabled = presenter.profile.isValid
+    }
+}
+
+extension ProfileViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        guard let text = textField.text else { return }
+        updateValue(with: text, in: textField)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        guard let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return true }
+        updateValue(with: text, in: textField)
+        return true
+    }
 }
 
 extension ProfileViewController: ProfileView {
@@ -111,12 +163,12 @@ extension ProfileViewController: ProfileView {
         
         switch state {
         case .willLoad:
-
+            
             LoaderView.shared.start(in: view)
-        case .failLoading:
+        case let .failLoading(message):
             
             LoaderView.shared.stop()
-            presentAlert(title: NSLocalizedString("Failure", comment: "Alert title"), message: NSLocalizedString("Failed to load profile", comment: "Alert message"))
+            presentAlert(title: NSLocalizedString("Failure", comment: "Alert title"), message: message)
         case .didLoad:
             
             LoaderView.shared.stop()

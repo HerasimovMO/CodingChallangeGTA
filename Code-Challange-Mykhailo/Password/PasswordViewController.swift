@@ -14,6 +14,8 @@ class PasswordViewController: UIViewController, AlertPresentable {
         case current = 1, new, confirm
     }
     
+    // MARK: UI items
+    
     private let containerStackView = UIStackView.create(axis: .vertical, spacing: 16)
     
     private let currentPassTextField = UITextField.create(placeholder: NSLocalizedString("Current password", comment: "Text field placeholder"), isSecureEntry: true)
@@ -27,6 +29,8 @@ class PasswordViewController: UIViewController, AlertPresentable {
     private let resetPassButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .body), text: NSLocalizedString("Reset Password", comment: "Button title"), textColor: .white, textAlignment: .center, backgroundColor: UIColor.mainTint, cornerRadius: 10)
     
     var presenter: PasswordViewPresenter!
+    
+    // MARK: Overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,7 +99,7 @@ class PasswordViewController: UIViewController, AlertPresentable {
         presenter.updatePassword()
     }
     
-    // MARK: Login handling
+    // MARK: Logic handling
     
     private func updateValue(with text: String, in textField: UITextField) {
         
@@ -142,12 +146,12 @@ extension PasswordViewController: PasswordView {
         
         switch state {
         case .willLoad:
-
+            
             LoaderView.shared.start(in: view)
-        case .failLoading:
+        case let .failLoading(message):
             
             LoaderView.shared.stop()
-            presentAlert(title: NSLocalizedString("Failure", comment: "Alert title"), message: NSLocalizedString("Failed to updated password, try again.", comment: "Alert message"))
+            presentAlert(title: NSLocalizedString("Failure", comment: "Alert title"), message: message)
         case .didLoad:
             
             LoaderView.shared.stop()

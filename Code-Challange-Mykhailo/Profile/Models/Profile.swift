@@ -10,14 +10,17 @@ import Foundation
 
 struct Profile: Codable, Hashable, Equatable {
     
-    let firstName: String
-    let userName: String
-    let lastName: String
+    var firstName: String
+    var userName: String
+    var lastName: String
     
     init() {
         self.firstName = .empty
         self.userName = .empty
         self.lastName = .empty
     }
-
+    
+    var isValid: Bool {
+        return !([firstName, userName, lastName].contains(where: { $0 == .empty }))
+    }
 }

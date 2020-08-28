@@ -9,9 +9,17 @@
 import Foundation
 
 struct UpdateProfileCall: Encodable {
+    
     let firstName: String
     let lastName: String
     let userName: String
+    
+    init(profile: Profile) {
+        
+        firstName = profile.firstName
+        lastName = profile.lastName
+        userName = profile.userName
+    }
 }
 
 extension UpdateProfileCall: APIParser {
@@ -35,8 +43,10 @@ extension UpdateProfileCall: APIRequest {
 
 extension APIClient {
 
-    func updateProfile(call: UpdateProfileCall, _ completion: @escaping (APIResponse<APIResult<Profile>>) -> Void) {
+    func updateProfile(profile: Profile, _ completion: @escaping (APIResponse<APIResult<Profile>>) -> Void) {
 
+        let call = UpdateProfileCall(profile: profile)
+        
         sessionManager.data(call) { response in
             self.handleResponse(call, response: response, completionHandler: completion)
         }

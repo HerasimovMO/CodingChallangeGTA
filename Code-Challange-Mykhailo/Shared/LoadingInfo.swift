@@ -12,7 +12,7 @@ enum LoadingState: Equatable {
 
     case willLoad
     case isLoading
-    case failLoading
+    case failLoading(message: String)
     case didLoad
 
     var isActive: Bool {
