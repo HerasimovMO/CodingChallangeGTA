@@ -14,6 +14,10 @@ struct UpdatePasswordCall: Encodable {
     var newPassword: String
     var passwordConfirmation: String
     
+    private enum CodingKeys : String, CodingKey {
+        case currentPassword, passwordConfirmation = "confirmPassword", newPassword
+    }
+    
     init(currentPassword: String = .empty, newPassword: String = .empty, passwordConfirmation: String = .empty) {
         self.currentPassword = currentPassword
         self.newPassword = newPassword
@@ -26,7 +30,7 @@ struct UpdatePasswordCall: Encodable {
 }
 
 extension UpdatePasswordCall: APIParser {
-    typealias DecodableType = APIResult<String>
+    typealias DecodableType = APIResult<[String:String]>
 }
 
 extension UpdatePasswordCall: APIRequest {
@@ -40,13 +44,13 @@ extension UpdatePasswordCall: APIRequest {
     }
     
     var parameters: [String: Any]? {
-        return ["currentPassword": currentPassword, "newPassword": newPassword, "passwordConfirmation": passwordConfirmation]
+        return nil
     }
 }
 
 extension APIClient {
 
-    func updatePassword(call: UpdatePasswordCall, _ completion: @escaping (APIResponse<APIResult<String>>) -> Void) {
+    func updatePassword(call: UpdatePasswordCall, _ completion: @escaping (APIResponse<APIResult<[String:String]>>) -> Void) {
         
         sessionManager.data(call) { response in
             self.handleResponse(call, response: response, completionHandler: completion)

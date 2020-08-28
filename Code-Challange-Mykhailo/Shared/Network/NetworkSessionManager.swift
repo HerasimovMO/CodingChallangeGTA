@@ -22,6 +22,12 @@ final class NetworkSessionManager: NSObject {
         let urlRequest = request.urlRequest
         
         let task = session.dataTask(with: urlRequest) { data, response, error in
+            
+            #warning("remove this one")
+//            if let data = data {
+//                print(String(data: data, encoding: .utf8))
+//            }
+           
             let dataResponse = DataResponse(request: urlRequest, response: response as? HTTPURLResponse, data: data, error: error)
             DispatchQueue.main.async {
                 completionBlock(dataResponse)
