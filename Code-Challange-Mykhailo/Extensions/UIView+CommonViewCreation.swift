@@ -135,25 +135,3 @@ extension UIButton {
         return button
     }
 }
-
-extension UIRefreshControl {
-
-    class func create(_ target: Any?, action: Selector) -> UIRefreshControl {
-
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(target, action: action, for: .valueChanged)
-        refreshControl.tintColor = UIColor.red
-        return refreshControl
-    }
-}
-
-extension UIActivityIndicatorView {
-
-    class func create(style: Style, hidesWhenStopped: Bool = true) -> UIActivityIndicatorView {
-
-        let activityIndicator = UIActivityIndicatorView(style: style)
-        activityIndicator.hidesWhenStopped = hidesWhenStopped
-        return activityIndicator
-    }
-}
-

@@ -122,11 +122,6 @@ extension NSLayoutConstraint {
 
 extension UIEdgeInsets {
     
-    static let infinite = UIEdgeInsets.create(right: CGFloat.greatestFiniteMagnitude)
-    
-    /// Insets with default right and left value of 20 points.
-    static let separatorRegular = UIEdgeInsets.create(right: 20, left: 20)
-    
     static func create(top: CGFloat = 0, right: CGFloat = 0, bottom: CGFloat = 0, left: CGFloat = 0) -> UIEdgeInsets {
         
         return UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)

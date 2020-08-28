@@ -28,7 +28,7 @@ final class APIClient {
 
     class func isSuccess(httpStatusCode: Int) -> Bool {
         switch httpStatusCode {
-        case 200 ... 299:
+        case 200...299:
             return true
         default:
             return false
