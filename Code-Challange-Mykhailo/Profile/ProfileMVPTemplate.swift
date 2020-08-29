@@ -8,6 +8,13 @@
 
 import Foundation
 
+struct ProfileItem {
+    
+    let label: String
+    let content: String
+    let placeholder: String
+}
+
 protocol ProfileViewPresenter {
     
     var profile: Profile { get set }
@@ -16,6 +23,9 @@ protocol ProfileViewPresenter {
     
     func loadProfile()
     func updateProfile()
+    
+    func header(for section: ProfileViewController.Section) -> String
+    func item(for section: ProfileViewController.Section, field: ProfileViewController.Field) -> ProfileItem
 }
 
 protocol ProfileView: class {

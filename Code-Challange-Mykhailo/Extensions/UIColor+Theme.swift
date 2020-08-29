@@ -11,4 +11,5 @@ import UIKit
 extension UIColor {
     static let mainTint = UIColor(named: "tintColor")!
     static let reddish = UIColor(named: "reddish")!
+    static let veryLightGray = UIColor(named: "veryLightGray")!
 }

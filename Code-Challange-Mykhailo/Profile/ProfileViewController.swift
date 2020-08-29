@@ -10,9 +10,24 @@ import UIKit
 
 class ProfileViewController: UIViewController, AlertPresentable {
     
-    private enum Fields: Int {
-        case username = 1, firstname, lastname
+    enum Field {
+        case username, firstname, lastname, newPass, confirmPass
     }
+
+    enum Section: Int, CaseIterable {
+        case basic, password
+        
+        var items: [Field] {
+            switch self {
+            case .basic:
+                return [.username, .firstname, .lastname]
+            case .password:
+                return [.newPass, .confirmPass]
+            }
+        }
+    }
+    
+    private let contentInset = UIEdgeInsets.create(top: 25)
     
     // MARK: UI items
     
@@ -28,7 +43,7 @@ class ProfileViewController: UIViewController, AlertPresentable {
 //        return [usernameTextField, firstNameTextField, lastNameTextField]
 //    }
     
-    private let saveButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .body), text: NSLocalizedString("Save Changes", comment: "Button title"), textColor: .white, textAlignment: .center, backgroundColor: UIColor.mainTint, cornerRadius: 10)
+//    private let saveButton = UIButton.create(font: UIFont.preferredFont(forTextStyle: .body), text: NSLocalizedString("Save Changes", comment: "Button title"), textColor: .white, textAlignment: .center, backgroundColor: UIColor.mainTint, cornerRadius: 10)
     
     var presenter: ProfileViewPresenter!
     
@@ -45,26 +60,20 @@ class ProfileViewController: UIViewController, AlertPresentable {
         presenter.loadProfile()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-//        guard allTextFields.contains(where: { $0.isFirstResponder }) else { return }
-//        self.view.endEditing(true)
-    }
-    
     // MARK: UI configuration
     
     private func configureUI() {
         
-        tableView.register(ProfileTableViewCell.self)
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.contentInset = contentInset
+        tableView.register(ProfileTableViewCell.self)
+        tableView.register(ProfileHeaderView.self)
+        tableView.register(ProfileFooterView.self)
+        
         view.addSubview(tableView)
         NSLayoutConstraint.snap(tableView, to: view)
-
-        
-//        configureTextFields()
-//        configureButtons()
     }
     
 //    private func configureTextFields() {
@@ -119,52 +128,22 @@ class ProfileViewController: UIViewController, AlertPresentable {
         presenter.updateProfile()
     }
     
-    @objc private func handleResetPassword(button: UIButton) {
-        
-        let passwordResetViewController = PasswordViewController()
-        passwordResetViewController.presenter = PasswordPresenter(view: passwordResetViewController)
-        
-        navigationController?.pushViewController(passwordResetViewController, animated: true)
-    }
-    
     // MARK: Logic handling
     
     private func updateValue(with text: String, in textField: UITextField) {
         
-        guard let field = Fields(rawValue: textField.tag) else { return }
-        
-        switch field {
-        case .username:
-            presenter.profile.userName = text
-        case .lastname:
-            presenter.profile.lastName = text
-        case .firstname:
-            presenter.profile.firstName = text
-        }
-        
-        saveButton.isEnabled = presenter.profile.isValid
-    }
-}
-
-extension ProfileViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        
-        guard let text = textField.text else { return }
-        updateValue(with: text, in: textField)
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        guard let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return true }
-        updateValue(with: text, in: textField)
-        return true
+//        guard let field = Fields(rawValue: textField.tag) else { return }
+//
+//        switch field {
+//        case .username:
+//            presenter.profile.userName = text
+//        case .lastname:
+//            presenter.profile.lastName = text
+//        case .firstname:
+//            presenter.profile.firstName = text
+//        }
+//
+//        saveButton.isEnabled = presenter.profile.isValid
     }
 }
 
@@ -183,10 +162,7 @@ extension ProfileViewController: ProfileView {
         case .didLoad:
             
             LoaderView.shared.stop()
-            
-//            usernameTextField.text = presenter.profile.userName
-//            firstNameTextField.text = presenter.profile.firstName
-//            lastNameTextField.text = presenter.profile.lastName
+            tableView.reloadSections(IndexSet(integer: Section.basic.rawValue), with: .automatic)
         case .isLoading: break
         }
     }
@@ -197,29 +173,23 @@ extension ProfileViewController: ProfileView {
 extension ProfileViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return Section.allCases.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        guard let sectionModel: HierarchicalViewModelType = viewModel.sectionItem(at: section) else {
-//            Logger.debug("no item at section: \(section)")
-//            return 0
-//        }
-//
-//        return sectionModel.numberOfItems
-        return 2
+        return Section.allCases[section].items.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: ProfileTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+        guard let section = Section(rawValue: indexPath.section),
+              let field = section.items[safe: indexPath.row] else {
+                
+            return UITableViewCell()
+        }
         
-//        guard let sectionModel = viewModel.sectionItem(at: indexPath.section), let itemModel = sectionModel.item(at: indexPath.row) as? HierarchicalCellRepresentableViewModelType else {
-//            Logger.debug("no item at indexPath : \(indexPath)")
-//            return UITableViewCell()
-//        }
-
-        cell.update(with: "Value", text: "Value")
+        let cell: ProfileTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+        cell.update(with: presenter.item(for: section, field: field))
         return cell
     }
 }
@@ -228,28 +198,17 @@ extension ProfileViewController: UITableViewDataSource {
 
 extension ProfileViewController: UITableViewDelegate {
 
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        guard let sectionModel = viewModel.sectionItem(at: indexPath.section) as? HierarchicalCellRepresentableViewModelType else {
-//            Logger.debug("no item at indexPath : \(indexPath)")
-//            return
-//        }
-//
-//        sectionModel.selectItem(atIndex: indexPath.row)
-//    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        guard let section = Section(rawValue: section) else { return nil }
+              
+        let header: ProfileHeaderView = tableView.dequeueReusableHeaderFooterView()
+        header.update(title: presenter.header(for: section))
+        return header
+    }
 
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return section == 0 ? CGFloat.leastNonzeroMagnitude : 10.0
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return CGFloat.leastNonzeroMagnitude
-//    }
-
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        return UIView.createEmpty(backgroundColor: Theme.beigeColor)
-//    }
-
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        return UIView.createEmpty()
-//    }
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer: ProfileFooterView = tableView.dequeueReusableHeaderFooterView()
+        return footer
+    }
 }

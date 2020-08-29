@@ -107,6 +107,8 @@ extension NSLayoutConstraint {
                 subview.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: offset.y).isActive = true
             case .horizontal:
                 subview.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: offset.x).isActive = true
+            @unknown default:
+                fatalError()
             }
         }
     }

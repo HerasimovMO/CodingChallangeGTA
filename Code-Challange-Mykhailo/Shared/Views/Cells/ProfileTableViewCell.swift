@@ -54,10 +54,11 @@ class ProfileTableViewCell: UITableViewCell {
         contentStackView.items = [descriptionLabel, valueTextField]
     }
     
-    func update(with label: String, text: String = .empty) {
+    func update(with item: ProfileItem) {
         
-        descriptionLabel.text = label
-        valueTextField.text = label
+        descriptionLabel.text = item.label
+        valueTextField.text = item.content
+        valueTextField.placeholder = item.placeholder
     }
 }
 

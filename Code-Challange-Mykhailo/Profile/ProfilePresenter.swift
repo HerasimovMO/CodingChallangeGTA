@@ -67,4 +67,40 @@ class ProfilePresenter: ProfileViewPresenter {
             self.loadState = .didLoad
         }
     }
+    
+    // MARK: Content provider
+    
+    func header(for section: ProfileViewController.Section) -> String {
+        switch section {
+        case .basic:
+            return NSLocalizedString("BASIC INFORMATION", comment: "Section header")
+        case .password:
+            return NSLocalizedString("PASSWORD", comment: "Section header")
+        }
+    }
+    
+    func item(for section: ProfileViewController.Section, field: ProfileViewController.Field) -> ProfileItem {
+        switch field {
+        case .username:
+            return ProfileItem(label: NSLocalizedString("Username", comment: "Label for the text field"),
+                               content: profile.userName,
+                               placeholder: NSLocalizedString("Enter username", comment: "Text field placeholder"))
+        case .firstname:
+            return ProfileItem(label:  NSLocalizedString("First name", comment: "Label for the text field"),
+                               content: profile.firstName,
+                               placeholder: NSLocalizedString("Enter first name", comment: "Text field placeholder"))
+        case .lastname:
+            return ProfileItem(label: NSLocalizedString("Last name", comment: "Label for the text field"),
+                               content: profile.lastName,
+                               placeholder: NSLocalizedString("Enter last name", comment: "Text field placeholder"))
+        case .newPass:
+            return ProfileItem(label: NSLocalizedString("New Password", comment: "Label for the text field"),
+                               content: .empty,
+                               placeholder: .empty)//NSLocalizedString("Enter new password", comment: "Text field placeholder"))
+        case .confirmPass:
+            return ProfileItem(label: NSLocalizedString("Re-entered Password", comment: "Label for the text field"),
+                               content: .empty,
+                               placeholder: .empty)//NSLocalizedString("Re-entered password", comment: "Text field placeholder"))
+        }
+    }
 }
