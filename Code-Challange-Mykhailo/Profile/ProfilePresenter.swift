@@ -53,6 +53,12 @@ class ProfilePresenter: ProfileViewPresenter {
     func updateProfile() {
         
         loadState = .willLoad
+        
+        guard profile.isValid else {
+            loadState = .failLoading(message: NSLocalizedString("Profile section needs to be filled in order to update it", comment: "Alert message"))
+            return
+        }
+        
         loadState = .isLoading
         
         APIClient().updateProfile(profile: profile) { [weak self] response in
@@ -73,6 +79,15 @@ class ProfilePresenter: ProfileViewPresenter {
     func updatePassword() {
         
         loadState = .willLoad
+        
+        // Lets assume we have a current password with the JWT token
+        passwordInfo.currentPassword = "Current password"
+        
+        guard passwordInfo.isValid else {
+            loadState = .failLoading(message: NSLocalizedString("Password section must be filled", comment: "Alert message"))
+            return
+        }
+        
         loadState = .isLoading
         
         APIClient().updatePassword(call: passwordInfo) { [weak self] response in
@@ -83,6 +98,7 @@ class ProfilePresenter: ProfileViewPresenter {
             case .failure:
                 self.loadState = .failLoading(message: NSLocalizedString("Failed to updated password, try again.", comment: "Alert message"))
             case .success:
+                self.passwordInfo = UpdatePasswordCall()
                 self.loadState = .didLoad
             }
         }
