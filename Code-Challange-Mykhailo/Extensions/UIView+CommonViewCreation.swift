@@ -81,7 +81,7 @@ extension UIStackView {
 
 extension UILabel {
 
-    class func create(font: UIFont, text: String? = nil, textColor: UIColor = UIColor.label, textAlignment: NSTextAlignment = .left, isDynamicallySized: Bool = false, contentPriority axies: [NSLayoutConstraint.PriorityAxis] = [.vertical]) -> UILabel {
+    class func create(font: UIFont, text: String? = nil, textColor: UIColor = UIColor.label, textAlignment: NSTextAlignment = .left, isDynamicallySized: Bool = false, contentPriority axies: [NSLayoutConstraint.PriorityAxis] = []) -> UILabel {
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -133,5 +133,41 @@ extension UIButton {
         
         button.configureRequiredPriorities(for: axies)
         return button
+    }
+}
+
+extension UITableView {
+
+    enum ItemSizing {
+
+        case automatic
+        case strict(value: CGFloat)
+    }
+
+    class func create(style: UITableView.Style = .plain, backgroundColor: UIColor = .white, rowSizing: ItemSizing = .automatic, sectionHeaderSizing: ItemSizing = .automatic) -> UITableView {
+
+        let tableView = UITableView(frame: .zero, style: style)
+        tableView.backgroundColor = backgroundColor
+
+        switch rowSizing {
+        case .automatic:
+            tableView.estimatedRowHeight = 40
+            tableView.rowHeight = UITableView.automaticDimension
+        case let .strict(value):
+            tableView.estimatedRowHeight = value
+        }
+
+        switch sectionHeaderSizing {
+        case .automatic:
+            tableView.estimatedSectionHeaderHeight = 40
+            tableView.sectionHeaderHeight = UITableView.automaticDimension
+        case let .strict(value):
+            tableView.sectionHeaderHeight = value
+        }
+
+        tableView.keyboardDismissMode = .onDrag
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.tableFooterView = UIView()
+        return tableView
     }
 }

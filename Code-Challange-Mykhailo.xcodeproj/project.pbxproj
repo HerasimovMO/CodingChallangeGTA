@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84176B3124F9DB26005EF341 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84176B3024F9DB26005EF341 /* ProfileTableViewCell.swift */; };
+		84176B3324F9DFCC005EF341 /* UITableView+Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84176B3224F9DFCC005EF341 /* UITableView+Registration.swift */; };
+		84176B3524F9E002005EF341 /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84176B3424F9E002005EF341 /* ReusableView.swift */; };
+		84176B3824F9EFB1005EF341 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84176B3724F9EFB1005EF341 /* ProfileHeaderView.swift */; };
+		84176B3A24F9EFBC005EF341 /* ProfileFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84176B3924F9EFBC005EF341 /* ProfileFooterView.swift */; };
 		848E35AC24F855CE00885F09 /* UIView+CommonViewCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35AB24F855CE00885F09 /* UIView+CommonViewCreation.swift */; };
 		848E35AE24F855FB00885F09 /* AutoLayout+ConvenientHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35AD24F855FB00885F09 /* AutoLayout+ConvenientHelpers.swift */; };
 		848E35B024F86A7100885F09 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35AF24F86A7100885F09 /* UIColor+Theme.swift */; };
@@ -58,6 +63,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84176B3024F9DB26005EF341 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		84176B3224F9DFCC005EF341 /* UITableView+Registration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Registration.swift"; sourceTree = "<group>"; };
+		84176B3424F9E002005EF341 /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
+		84176B3724F9EFB1005EF341 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		84176B3924F9EFBC005EF341 /* ProfileFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFooterView.swift; sourceTree = "<group>"; };
 		848E35AB24F855CE00885F09 /* UIView+CommonViewCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+CommonViewCreation.swift"; sourceTree = "<group>"; };
 		848E35AD24F855FB00885F09 /* AutoLayout+ConvenientHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AutoLayout+ConvenientHelpers.swift"; sourceTree = "<group>"; };
 		848E35AF24F86A7100885F09 /* UIColor+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
@@ -122,6 +132,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84176B2F24F9D983005EF341 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				84176B3024F9DB26005EF341 /* ProfileTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		84176B3624F9EF71005EF341 /* SupplementaryViews */ = {
+			isa = PBXGroup;
+			children = (
+				84176B3724F9EFB1005EF341 /* ProfileHeaderView.swift */,
+				84176B3924F9EFBC005EF341 /* ProfileFooterView.swift */,
+			);
+			path = SupplementaryViews;
+			sourceTree = "<group>";
+		};
 		848E35B124F86D2600885F09 /* Password */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +171,7 @@
 		848E35BC24F8848800885F09 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				84176B3424F9E002005EF341 /* ReusableView.swift */,
 				848E35BD24F8848F00885F09 /* AlertPresentable.swift */,
 			);
 			path = Protocols;
@@ -152,6 +180,8 @@
 		848E35BF24F885EB00885F09 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				84176B3624F9EF71005EF341 /* SupplementaryViews */,
+				84176B2F24F9D983005EF341 /* Cells */,
 				848E35C024F8860A00885F09 /* LoaderView.swift */,
 			);
 			path = Views;
@@ -251,6 +281,7 @@
 				848E35AD24F855FB00885F09 /* AutoLayout+ConvenientHelpers.swift */,
 				848E35AF24F86A7100885F09 /* UIColor+Theme.swift */,
 				848E35BA24F8845D00885F09 /* UIAlertAction+DefaultActions.swift */,
+				84176B3224F9DFCC005EF341 /* UITableView+Registration.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -416,15 +447,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				84E1228224F7289200C37C57 /* ProfileViewController.swift in Sources */,
+				84176B3124F9DB26005EF341 /* ProfileTableViewCell.swift in Sources */,
 				84E122C624F7328D00C37C57 /* APIParser.swift in Sources */,
+				84176B3524F9E002005EF341 /* ReusableView.swift in Sources */,
 				84E122B624F72EA500C37C57 /* Profile.swift in Sources */,
 				848E35B424F86D5000885F09 /* PasswordViewController.swift in Sources */,
 				848E35BE24F8848F00885F09 /* AlertPresentable.swift in Sources */,
 				84E1227E24F7289200C37C57 /* AppDelegate.swift in Sources */,
 				848E35AC24F855CE00885F09 /* UIView+CommonViewCreation.swift in Sources */,
+				84176B3824F9EFB1005EF341 /* ProfileHeaderView.swift in Sources */,
 				84E122C224F7327B00C37C57 /* APIClient.swift in Sources */,
 				84E122CA24F7372D00C37C57 /* APIResult.swift in Sources */,
 				84E122BA24F72F2300C37C57 /* String+Enhancements.swift in Sources */,
+				84176B3A24F9EFBC005EF341 /* ProfileFooterView.swift in Sources */,
 				84E122D324F73D6100C37C57 /* UpdatePasswordCall.swift in Sources */,
 				84E1228024F7289200C37C57 /* SceneDelegate.swift in Sources */,
 				84E122C824F7329600C37C57 /* APIResponse.swift in Sources */,
@@ -437,6 +472,7 @@
 				84E122CF24F73B3C00C37C57 /* LoadingInfo.swift in Sources */,
 				848E35BB24F8845E00885F09 /* UIAlertAction+DefaultActions.swift in Sources */,
 				84E122BE24F7326500C37C57 /* NetworkSessionManager.swift in Sources */,
+				84176B3324F9DFCC005EF341 /* UITableView+Registration.swift in Sources */,
 				84E122C424F7328500C37C57 /* APIError.swift in Sources */,
 				84E122CD24F73A3C00C37C57 /* GetProfileCall.swift in Sources */,
 				84E122D124F73D4800C37C57 /* UpdateProfileCall.swift in Sources */,
