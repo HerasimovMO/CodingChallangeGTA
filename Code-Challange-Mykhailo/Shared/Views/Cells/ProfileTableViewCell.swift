@@ -43,22 +43,23 @@ class ProfileTableViewCell: UITableViewCell {
     // MARK: - Configurations
     
     private func configureUI() {
-    
+        
         selectionStyle = .none
         valueTextField.delegate = self
         
         contentView.addSubview(contentStackView)
         NSLayoutConstraint.size(view: descriptionLabel, attributes: [.height(value: height)])
         NSLayoutConstraint.snap(contentStackView, to: contentView, for: [.bottom(priority: .defaultLow), .top, .left, .right], with: mainContentInsets)
-
+        
         contentStackView.items = [descriptionLabel, valueTextField]
     }
     
-    func update(with item: ProfileItem) {
+    func update(with item: ProfileItem, valueUpdateHandler: ((_ text: String) -> Void)?) {
         
         descriptionLabel.text = item.label
         valueTextField.text = item.content
         valueTextField.placeholder = item.placeholder
+        textUpdate = valueUpdateHandler
     }
 }
 
@@ -73,13 +74,13 @@ extension ProfileTableViewCell: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         guard let text = textField.text else { return }
-//        updateValue(with: text, in: textField)
+        textUpdate?(text)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         guard let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return true }
-//        updateValue(with: text, in: textField)
+        textUpdate?(text)
         return true
     }
 }

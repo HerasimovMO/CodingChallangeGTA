@@ -162,7 +162,7 @@ extension ProfileViewController: ProfileView {
         case .didLoad:
             
             LoaderView.shared.stop()
-            tableView.reloadSections(IndexSet(integer: Section.basic.rawValue), with: .automatic)
+            tableView.reloadData()
         case .isLoading: break
         }
     }
@@ -189,7 +189,10 @@ extension ProfileViewController: UITableViewDataSource {
         }
         
         let cell: ProfileTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.update(with: presenter.item(for: section, field: field))
+        cell.update(with: presenter.item(for: section, field: field)) { [weak self] in
+            self?.presenter.updateItem(with: $0, for: section, field: field)
+        }
+        
         return cell
     }
 }

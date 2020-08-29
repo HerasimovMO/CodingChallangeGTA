@@ -17,15 +17,16 @@ struct ProfileItem {
 
 protocol ProfileViewPresenter {
     
-    var profile: Profile { get set }
-    
     init(view: ProfileView)
     
     func loadProfile()
     func updateProfile()
+    func updatePassword()
     
     func header(for section: ProfileViewController.Section) -> String
     func item(for section: ProfileViewController.Section, field: ProfileViewController.Field) -> ProfileItem
+    
+    func updateItem(with text: String, for section: ProfileViewController.Section, field: ProfileViewController.Field)
 }
 
 protocol ProfileView: class {

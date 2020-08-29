@@ -16,9 +16,6 @@
 		848E35AC24F855CE00885F09 /* UIView+CommonViewCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35AB24F855CE00885F09 /* UIView+CommonViewCreation.swift */; };
 		848E35AE24F855FB00885F09 /* AutoLayout+ConvenientHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35AD24F855FB00885F09 /* AutoLayout+ConvenientHelpers.swift */; };
 		848E35B024F86A7100885F09 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35AF24F86A7100885F09 /* UIColor+Theme.swift */; };
-		848E35B424F86D5000885F09 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35B324F86D5000885F09 /* PasswordViewController.swift */; };
-		848E35B624F86D6D00885F09 /* PasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35B524F86D6D00885F09 /* PasswordPresenter.swift */; };
-		848E35B824F86D7C00885F09 /* PasswordMVPTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35B724F86D7C00885F09 /* PasswordMVPTemplate.swift */; };
 		848E35BB24F8845E00885F09 /* UIAlertAction+DefaultActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35BA24F8845D00885F09 /* UIAlertAction+DefaultActions.swift */; };
 		848E35BE24F8848F00885F09 /* AlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35BD24F8848F00885F09 /* AlertPresentable.swift */; };
 		848E35C124F8860A00885F09 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E35C024F8860A00885F09 /* LoaderView.swift */; };
@@ -73,9 +70,6 @@
 		848E35AB24F855CE00885F09 /* UIView+CommonViewCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+CommonViewCreation.swift"; sourceTree = "<group>"; };
 		848E35AD24F855FB00885F09 /* AutoLayout+ConvenientHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AutoLayout+ConvenientHelpers.swift"; sourceTree = "<group>"; };
 		848E35AF24F86A7100885F09 /* UIColor+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
-		848E35B324F86D5000885F09 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
-		848E35B524F86D6D00885F09 /* PasswordPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordPresenter.swift; sourceTree = "<group>"; };
-		848E35B724F86D7C00885F09 /* PasswordMVPTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordMVPTemplate.swift; sourceTree = "<group>"; };
 		848E35BA24F8845D00885F09 /* UIAlertAction+DefaultActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+DefaultActions.swift"; sourceTree = "<group>"; };
 		848E35BD24F8848F00885F09 /* AlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresentable.swift; sourceTree = "<group>"; };
 		848E35C024F8860A00885F09 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
@@ -151,25 +145,6 @@
 			path = SupplementaryViews;
 			sourceTree = "<group>";
 		};
-		848E35B124F86D2600885F09 /* Password */ = {
-			isa = PBXGroup;
-			children = (
-				848E35B324F86D5000885F09 /* PasswordViewController.swift */,
-				848E35B724F86D7C00885F09 /* PasswordMVPTemplate.swift */,
-				848E35B524F86D6D00885F09 /* PasswordPresenter.swift */,
-				848E35B224F86D3200885F09 /* Calls */,
-			);
-			path = Password;
-			sourceTree = "<group>";
-		};
-		848E35B224F86D3200885F09 /* Calls */ = {
-			isa = PBXGroup;
-			children = (
-				84E122D224F73D6100C37C57 /* UpdatePasswordCall.swift */,
-			);
-			path = Calls;
-			sourceTree = "<group>";
-		};
 		848E35BC24F8848800885F09 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,7 +190,6 @@
 				84E1227D24F7289200C37C57 /* AppDelegate.swift */,
 				84E1227F24F7289200C37C57 /* SceneDelegate.swift */,
 				84E122AF24F72A2800C37C57 /* Profile */,
-				848E35B124F86D2600885F09 /* Password */,
 				84E122B724F72ECE00C37C57 /* Shared */,
 				84E122B824F72F0600C37C57 /* Extensions */,
 				84E1228624F7289500C37C57 /* Assets.xcassets */,
@@ -315,6 +289,7 @@
 			children = (
 				84E122CC24F73A3C00C37C57 /* GetProfileCall.swift */,
 				84E122D024F73D4800C37C57 /* UpdateProfileCall.swift */,
+				84E122D224F73D6100C37C57 /* UpdatePasswordCall.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -454,7 +429,6 @@
 				84E122C624F7328D00C37C57 /* APIParser.swift in Sources */,
 				84176B3524F9E002005EF341 /* ReusableView.swift in Sources */,
 				84E122B624F72EA500C37C57 /* Profile.swift in Sources */,
-				848E35B424F86D5000885F09 /* PasswordViewController.swift in Sources */,
 				848E35BE24F8848F00885F09 /* AlertPresentable.swift in Sources */,
 				84E1227E24F7289200C37C57 /* AppDelegate.swift in Sources */,
 				84176B3C24FA1F05005EF341 /* Collection+Subscript.swift in Sources */,
@@ -470,7 +444,6 @@
 				84E122B324F72ADB00C37C57 /* ProfilePresenter.swift in Sources */,
 				848E35B024F86A7100885F09 /* UIColor+Theme.swift in Sources */,
 				84E122B124F72A9800C37C57 /* ProfileMVPTemplate.swift in Sources */,
-				848E35B624F86D6D00885F09 /* PasswordPresenter.swift in Sources */,
 				848E35C124F8860A00885F09 /* LoaderView.swift in Sources */,
 				84E122C024F7327200C37C57 /* APIRequest.swift in Sources */,
 				84E122CF24F73B3C00C37C57 /* LoadingInfo.swift in Sources */,
@@ -480,7 +453,6 @@
 				84E122C424F7328500C37C57 /* APIError.swift in Sources */,
 				84E122CD24F73A3C00C37C57 /* GetProfileCall.swift in Sources */,
 				84E122D124F73D4800C37C57 /* UpdateProfileCall.swift in Sources */,
-				848E35B824F86D7C00885F09 /* PasswordMVPTemplate.swift in Sources */,
 				848E35AE24F855FB00885F09 /* AutoLayout+ConvenientHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

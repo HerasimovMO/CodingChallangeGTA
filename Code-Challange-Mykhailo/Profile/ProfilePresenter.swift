@@ -16,7 +16,8 @@ class ProfilePresenter: ProfileViewPresenter {
         }
     }
     
-    var profile: Profile
+    private var profile: Profile
+    private var passwordInfo: UpdatePasswordCall
     
     unowned let view: ProfileView
     
@@ -24,6 +25,7 @@ class ProfilePresenter: ProfileViewPresenter {
         
         self.view = view
         self.profile = Profile()
+        self.passwordInfo = UpdatePasswordCall()
     }
     
     // API requests
@@ -68,6 +70,24 @@ class ProfilePresenter: ProfileViewPresenter {
         }
     }
     
+    func updatePassword() {
+        
+        loadState = .willLoad
+        loadState = .isLoading
+        
+        APIClient().updatePassword(call: passwordInfo) { [weak self] response in
+            
+            guard let self = self else { return }
+            
+            switch response {
+            case .failure:
+                self.loadState = .failLoading(message: NSLocalizedString("Failed to updated password, try again.", comment: "Alert message"))
+            case .success:
+                self.loadState = .didLoad
+            }
+        }
+    }
+    
     // MARK: Content provider
     
     func header(for section: ProfileViewController.Section) -> String {
@@ -101,6 +121,34 @@ class ProfilePresenter: ProfileViewPresenter {
             return ProfileItem(label: NSLocalizedString("Re-entered Password", comment: "Label for the text field"),
                                content: .empty,
                                placeholder: .empty)//NSLocalizedString("Re-entered password", comment: "Text field placeholder"))
+        }
+    }
+    
+    // -----------
+    
+    func updateItem(with text: String, for section: ProfileViewController.Section, field: ProfileViewController.Field) {
+        
+        switch section {
+        case .basic:
+            switch field {
+            case .username:
+                profile.userName = text
+            case .firstname:
+                profile.firstName = text
+            case .lastname:
+                profile.lastName = text
+            default:
+                break
+            }
+        case .password:
+            switch field {
+            case .newPass:
+                passwordInfo.newPassword = text
+            case .confirmPass:
+                passwordInfo.passwordConfirmation = text
+            default:
+                break
+            }
         }
     }
 }
