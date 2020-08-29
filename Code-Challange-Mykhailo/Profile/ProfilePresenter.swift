@@ -88,6 +88,11 @@ class ProfilePresenter: ProfileViewPresenter {
             return
         }
         
+        guard passwordInfo.newPassword == passwordInfo.passwordConfirmation else {
+            loadState = .failLoading(message: NSLocalizedString("New password and the re-entered value must match", comment: "Alert message"))
+            return
+        }
+        
         loadState = .isLoading
         
         APIClient().updatePassword(call: passwordInfo) { [weak self] response in
@@ -131,12 +136,14 @@ class ProfilePresenter: ProfileViewPresenter {
                                placeholder: NSLocalizedString("Enter last name", comment: "Text field placeholder"))
         case .newPass:
             return ProfileItem(label: NSLocalizedString("New Password", comment: "Label for the text field"),
-                               content: .empty,
-                               placeholder: .empty)//NSLocalizedString("Enter new password", comment: "Text field placeholder"))
+                               content: passwordInfo.newPassword,
+                               placeholder: .empty,
+                               isSecure: true)
         case .confirmPass:
             return ProfileItem(label: NSLocalizedString("Re-entered Password", comment: "Label for the text field"),
-                               content: .empty,
-                               placeholder: .empty)//NSLocalizedString("Re-entered password", comment: "Text field placeholder"))
+                               content: passwordInfo.passwordConfirmation,
+                               placeholder: .empty,
+                               isSecure: true)
         }
     }
     

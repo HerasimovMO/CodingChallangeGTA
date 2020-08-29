@@ -58,6 +58,7 @@ class ProfileTableViewCell: UITableViewCell {
         
         descriptionLabel.text = item.label
         valueTextField.text = item.content
+        valueTextField.isSecureTextEntry = item.isSecure
         valueTextField.placeholder = item.placeholder
         textUpdate = valueUpdateHandler
     }

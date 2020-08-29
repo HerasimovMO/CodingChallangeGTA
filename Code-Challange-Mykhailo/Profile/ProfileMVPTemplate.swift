@@ -13,6 +13,15 @@ struct ProfileItem {
     let label: String
     let content: String
     let placeholder: String
+    let isSecure: Bool
+    
+    init(label: String, content: String, placeholder: String, isSecure: Bool = false) {
+        
+        self.label = label
+        self.content = content
+        self.placeholder = placeholder
+        self.isSecure = isSecure
+    }
 }
 
 protocol ProfileViewPresenter {
