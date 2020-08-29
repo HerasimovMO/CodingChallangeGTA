@@ -10,23 +10,23 @@ import UIKit
 
 class ProfileTableViewCell: UITableViewCell {
     
-    // MARK: - Insets & constants
+    // MARK: Insets & constants
     
     private let mainContentInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
     private let height: CGFloat = 44
     
-    // MARK: - Views
+    // MARK: Views
     
     private let contentStackView = UIStackView.create(axis: .horizontal, spacing: 5, distribution: .fillEqually)
     
     private let descriptionLabel = UILabel.create(font: UIFont.preferredFont(forTextStyle: .body), textAlignment: .left, contentPriority: [.horizontal(priority: .defaultLow)])
     private let valueTextField = UITextField.create(placeholder: NSLocalizedString("Enter username", comment: "Text field placeholder"))
     
-    // MARK: - Properties
+    // MARK: Properties
     
     private var textUpdate: ((_ text: String) -> Void)? = nil
     
-    // MARK: - Initializers
+    // MARK: Initializers
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -40,7 +40,7 @@ class ProfileTableViewCell: UITableViewCell {
         configureUI()
     }
     
-    // MARK: - Configurations
+    // MARK: Configurations
     
     private func configureUI() {
         

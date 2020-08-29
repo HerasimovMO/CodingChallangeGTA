@@ -10,16 +10,16 @@ import UIKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
     
-    // MARK: - Insets & constants
+    // MARK: Insets & constants
 
     private let mainContentInsets = UIEdgeInsets.create(vertical: 0, horizontal: 16)
     private let height: CGFloat = 30
     
-    // MARK: - Views
+    // MARK: Views
     
     private let titleLabel = UILabel.create(font: UIFont.preferredFont(forTextStyle: .footnote), textColor: .gray, textAlignment: .left, contentPriority: [.horizontal(priority: .defaultLow)])
     
-    // MARK: - Initializers
+    // MARK: Initializers
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -33,7 +33,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         configureUI()
     }
     
-    // MARK: - Configurations
+    // MARK: Configurations
     
     private func configureUI() {
         
