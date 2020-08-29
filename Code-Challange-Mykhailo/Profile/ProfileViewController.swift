@@ -75,7 +75,7 @@ class ProfileViewController: UIViewController, AlertPresentable {
 
 extension ProfileViewController: ProfileView {
     
-    func loadingProfile(with state: LoadingState) {
+    func loadingProfileInfo(with state: LoadingState) {
         
         switch state {
         case .willLoad:

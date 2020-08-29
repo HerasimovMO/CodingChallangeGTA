@@ -12,7 +12,7 @@ class ProfilePresenter: ProfileViewPresenter {
     
     private var loadState: LoadingState = .didLoad {
         didSet {
-            view.loadingProfile(with: loadState)
+            view.loadingProfileInfo(with: loadState)
         }
     }
     

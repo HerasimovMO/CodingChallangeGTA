@@ -31,5 +31,5 @@ protocol ProfileViewPresenter {
 
 protocol ProfileView: class {
     
-    func loadingProfile(with state: LoadingState)
+    func loadingProfileInfo(with state: LoadingState)
 }
